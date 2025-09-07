@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEEK Web 3.0</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Poppins:wght@400;600;700;800;900&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        .bg-animated {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0,212,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,153,204,0.1) 0%, transparent 50%);
+            animation: bgMove 20s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        @keyframes bgMove {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+        
+        /* Header */
+        .header {
+            background: rgba(10,10,10,0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(0,212,255,0.2);
+        }
+        
+        .nav {
+            max-width: 1200px; margin: 0 auto; padding: 0 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        
+        .logo {
+            font-size: 38px; font-weight: 900;
+            background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-decoration: none; letter-spacing: 1px;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            filter: drop-shadow(0 0 20px rgba(0,212,255,0.4));
+        }
+        
+        .cta-btn {
+            background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
+            color: white; padding: 12px 24px; border-radius: 25px;
+            text-decoration: none; font-weight: 600;
+            transition: all 0.3s; position: relative; overflow: hidden;
+        }
+        
+        .cta-btn::before {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.7s;
+        }
+        
+        .cta-btn:hover::before { left: 100%; }
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 20px 40px rgba(0,212,255,0.4); }
+        
+        /* Hero */
+        .hero {
+            padding: 140px 20px 80px; text-align: center;
+            background: radial-gradient(ellipse at center, rgba(0,212,255,0.08) 0%, transparent 70%);
+            position: relative; min-height: 100vh; display: flex; align-items: center;
+        }
+        
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(0,212,255,0.05) 60deg, transparent 120deg);
+            animation: heroRotate 30s linear infinite;
+        }
+        
+        @keyframes heroRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .hero-content { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; }
+        
+        .hero h1 {
+            font-size: 72px; font-weight: 900; margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #00D4FF 50%, #0099CC 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(0,212,255,0.3));
+        }
+        
+        .hero p { font-size: 20px; color: #ccc; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        
+        .hero-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
+            color: white; padding: 18px 36px; border-radius: 30px;
+            text-decoration: none; font-weight: 600; font-size: 18px;
+            transition: all 0.4s; position: relative; overflow: hidden;
+        }
+        
+        .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 25px 60px rgba(0,212,255,0.5); }
+        
+        .btn-secondary {
+            background: rgba(0,212,255,0.1); color: #00D4FF;
+            padding: 18px 36px; border: 2px solid #00D4FF; border-radius: 30px;
+            text-decoration: none; font-weight: 600; font-size: 18px;
+            transition: all 0.4s; backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover { background: #00D4FF; color: #fff; transform: translateY(-4px); }
+        
+        /* Services */
+        .services { padding: 100px 20px; background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); }
+        
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        .section-title { text-align: center; margin-bottom: 60px; }
+        .section-title h2 { font-size: 48px; font-weight: 800; margin-bottom: 20px; }
+        .section-title p { font-size: 18px; color: #ccc; }
+        
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        
+        .service-card {
+            background: linear-gradient(145deg, rgba(45,45,45,0.8) 0%, rgba(26,26,26,0.9) 100%);
+            backdrop-filter: blur(20px); padding: 40px 30px; border-radius: 20px;
+            text-align: center; border: 1px solid rgba(0,212,255,0.15);
+            transition: all 0.5s; position: relative; overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(0,212,255,0.05) 0%, rgba(0,153,204,0.03) 100%);
+            opacity: 0; transition: opacity 0.5s; z-index: -1;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px); border-color: rgba(0,212,255,0.5);
+            box-shadow: 0 30px 60px rgba(0,212,255,0.2);
+        }
+        
+        .service-card:hover::before { opacity: 1; }
+        
+        .service-icon { font-size: 48px; margin-bottom: 20px; }
+        .service-card h3 { font-size: 24px; font-weight: 700; margin-bottom: 15px; }
+        .service-card p { color: #ccc; font-size: 16px; }
+        
+        /* AI Tools */
+        .ai-tools { padding: 100px 20px; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); }
+        
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-top: 40px; }
+        
+        .tool-card {
+            background: rgba(26,26,26,0.8); backdrop-filter: blur(20px);
+            padding: 25px 15px; border-radius: 15px; text-align: center;
+            border: 1px solid rgba(0,212,255,0.1); transition: all 0.4s;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px); border-color: #00D4FF;
+            box-shadow: 0 15px 40px rgba(0,212,255,0.2);
+        }
+        
+        .tool-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 0 10px rgba(0,212,255,0.3));
+            transition: all 0.3s;
+        }
+        
+        .tool-card:hover .tool-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 20px rgba(0,212,255,0.6));
+        }
+        
+        .tool-card h4 { color: #fff; font-weight: 600; margin-bottom: 8px; }
+        .tool-card p { color: #ccc; font-size: 14px; }
+        
+        /* CTA */
+        .cta-section {
+            padding: 80px 20px; text-align: center;
+            background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
+        }
+        
+        .cta-section h2 { font-size: 42px; font-weight: 800; margin-bottom: 20px; }
+        .cta-section p { font-size: 18px; margin-bottom: 30px; opacity: 0.9; }
+        
+        .cta-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        
+        .btn-white {
+            background: #fff; color: #00D4FF; padding: 16px 32px; border-radius: 25px;
+            text-decoration: none; font-weight: 600; transition: all 0.3s;
+        }
+        
+        .btn-white:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(255,255,255,0.3); }
+        
+        /* Footer */
+        .footer {
+            background: #0a0a0a; padding: 40px 20px 20px;
+            border-top: 1px solid rgba(0,212,255,0.2);
+        }
+        
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 30px; }
+        .footer-section h4 { font-size: 18px; font-weight: 600; margin-bottom: 15px; color: #00D4FF; }
+        .footer-section a { color: #ccc; text-decoration: none; margin-bottom: 8px; display: block; transition: color 0.3s; }
+        .footer-section a:hover { color: #00D4FF; }
+        
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); color: #ccc; }
+        
+        /* Mobile */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 48px; }
+            .nav { padding: 0 15px; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .services-grid, .tools-grid { grid-template-columns: 1fr; }
+            .logo { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animated"></div>
+    
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">GEEK</a>
+            <a href="https://t.me/lazyGEEEK" class="cta-btn">Связаться</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>GEEK Web 3.0</h1>
+            <p>Готовые решения для вашего бизнеса. Мы не только рассказываем о технологиях, но и предлагаем инновационные решения.</p>
+            <div class="hero-buttons">
+                <a href="https://t.me/geekweb3" class="btn-primary">Telegram канал</a>
+                <a href="https://t.me/lazyGEEEK" class="btn-secondary">Консультация</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Наши услуги</h2>
+                <p>Полный спектр цифровых решений</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🤖</div>
+                    <h3>Чат-боты Telegram</h3>
+                    <p>Автоматизация общения с клиентами 24/7</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
+                    <h3>Мини-приложения</h3>
+                    <p>Интерактивные сервисы в мессенджере</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🌐</div>
+                    <h3>Сайты и лендинги</h3>
+                    <p>Современный дизайн, высокая конверсия</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💳</div>
+                    <h3>ИИ-подписки</h3>
+                    <p>Доступ к популярным ИИ-инструментам</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ai-tools">
+        <div class="container">
+            <div class="section-title">
+                <h2>ИИ-инструменты</h2>
+                <p>Подписки на лучшие сервисы</p>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🤖</div>
+                    <h4>ChatGPT</h4>
+                    <p>Умный помощник</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🧠</div>
+                    <h4>Claude</h4>
+                    <p>ИИ для анализа</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">⚡</div>
+                    <h4>Cursor</h4>
+                    <p>ИИ-редактор</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🎨</div>
+                    <h4>Krea</h4>
+                    <p>Генерация изображений</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🎵</div>
+                    <h4>Suno</h4>
+                    <p>Создание музыки</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🎬</div>
+                    <h4>Hailuo</h4>
+                    <p>Создание видео</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🎞️</div>
+                    <h4>Kling AI</h4>
+                    <p>Продвинутые видео</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">📹</div>
+                    <h4>VEO 3</h4>
+                    <p>Google видео ИИ</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🔮</div>
+                    <h4>И другие!</h4>
+                    <p>Уточняйте в ЛС</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Готовы начать проект?</h2>
+            <p>Свяжитесь с нами для консультации</p>
+            <div class="cta-buttons">
+                <a href="https://t.me/lazyGEEEK" class="btn-white">Написать в Telegram</a>
+                <a href="https://www.avito.ru/user/ec4c036d1faa0a154a202ce6fc4e3678/profile?src=sharing" class="btn-white">Авито</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GEEK Web 3.0</h4>
+                    <p>Инновационные решения для цифрового бизнеса</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <a href="https://t.me/geekweb3">Telegram канал</a>
+                    <a href="https://t.me/lazyGEEEK">Связаться с нами</a>
+                    <a href="https://www.avito.ru/user/ec4c036d1faa0a154a202ce6fc4e3678/profile?src=sharing">Авито</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 GEEK Web 3.0</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
