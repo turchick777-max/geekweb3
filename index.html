@@ -42,7 +42,7 @@ body{font-family:'Roboto',sans-serif;background:#0a0a0a;color:#fff;overflow-x:hi
 .section-title{text-align:center;margin-bottom:60px}
 .section-title h2{font-size:48px;font-weight:800;margin-bottom:20px;animation:fadeInUp 1s ease-out}
 .section-title p{font-size:18px;color:#ccc}
-.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px}
+.services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:30px;max-width:900px;margin:0 auto}
 .service-card{background:linear-gradient(145deg,rgba(45,45,45,0.8) 0%,rgba(26,26,26,0.9) 100%);backdrop-filter:blur(20px);padding:40px 30px;border-radius:20px;text-align:center;border:1px solid rgba(0,212,255,0.15);transition:all 0.5s;position:relative;overflow:hidden;animation:fadeInUp 1s ease-out both}
 .service-card:nth-child(1){animation-delay:0.1s}
 .service-card:nth-child(2){animation-delay:0.2s}
@@ -95,7 +95,7 @@ body{font-family:'Roboto',sans-serif;background:#0a0a0a;color:#fff;overflow-x:hi
 .btn-white:hover::before{left:100%}
 .btn-white:hover{transform:translateY(-4px) scale(1.05);box-shadow:0 20px 50px rgba(255,255,255,0.3)}
 .footer{background:#0a0a0a;padding:60px 20px 30px;border-top:1px solid rgba(0,212,255,0.2)}
-.footer-content{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:40px}
+.footer-content{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:40px;max-width:800px;margin-left:auto;margin-right:auto}
 .footer-section h4{font-size:32px;font-weight:900;margin-bottom:20px;background:linear-gradient(135deg,#00D4FF 0%,#0099CC 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .footer-section p{color:#ccc;line-height:1.6}
 .footer-section a{color:#ccc;text-decoration:none;margin-bottom:10px;display:block;transition:all 0.3s}
@@ -105,7 +105,7 @@ body{font-family:'Roboto',sans-serif;background:#0a0a0a;color:#fff;overflow-x:hi
 .scroll-top.visible{opacity:1;visibility:visible}
 .scroll-top:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,212,255,0.4)}
 .scroll-top::after{content:'↑';font-size:24px;color:white}
-@media (max-width:768px){.hero h1{font-size:48px}.services-grid,.features-grid{grid-template-columns:1fr}.tools-grid{grid-template-columns:1fr;max-width:400px}.logo{font-size:32px}.section-title h2{font-size:36px}.cta-section h2{font-size:36px}.footer-section h4{font-size:24px}}
+@media (max-width:768px){.hero h1{font-size:48px}.services-grid{grid-template-columns:1fr}.features-grid{grid-template-columns:1fr}.tools-grid{grid-template-columns:1fr;max-width:400px}.logo{font-size:32px}.section-title h2{font-size:36px}.cta-section h2{font-size:36px}.footer-section h4{font-size:24px}.footer-content{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -226,7 +226,7 @@ body{font-family:'Roboto',sans-serif;background:#0a0a0a;color:#fff;overflow-x:hi
 <div class="footer-content">
 <div class="footer-section">
 <h4>GEEK WEB 3.0</h4>
-<p>Инновационные решения для цифрового бизнеса. Создаем сайты, чат-ботов и предоставляем доступ к лучшим ИИ-инструментам.</p>
+<p>Инновационные решения для бизнеса. Создаем сайты, чат-ботов, мини-приложения и предоставляем доступ к лучшим ИИ-инструментам.</p>
 </div>
 <div class="footer-section">
 <h4>Контакты</h4>
@@ -236,7 +236,7 @@ body{font-family:'Roboto',sans-serif;background:#0a0a0a;color:#fff;overflow-x:hi
 </div>
 </div>
 <div class="footer-bottom">
-<p>&copy; 2025 GEEK Web 3.0. Все права защищены.</p>
+<p>&copy; 2025 GEEK WEB 3.0. Все права защищены.</p>
 </div>
 </div>
 </footer>
