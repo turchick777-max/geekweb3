@@ -1,619 +1,252 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEEK Web 3.0 - Разработка сайтов, чат-ботов и подписки на ИИ</title>
-    <meta name="description" content="GEEK Web 3.0 - создание сайтов, чат-ботов для Telegram, мини-приложений и подписки на ИИ-инструменты. Быстро, без шаблонов, под ключ.">
-    <meta name="keywords" content="разработка сайтов, чат-боты telegram, подписки ИИ, ChatGPT, Claude, Cursor, веб-разработка">
-    <link rel="canonical" href="https://geekweb3.vercel.app">
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Poppins:wght@400;600;700;800;900&display=swap');
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            overflow-x: hidden;
-        }
-        
-        /* Animated Background */
-        .bg-animated {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(0,212,255,0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0,153,204,0.1) 0%, transparent 50%);
-            animation: bgMove 20s ease-in-out infinite;
-            z-index: -1;
-        }
-        
-        @keyframes bgMove {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(180deg); }
-        }
-        
-        /* Particles */
-        .particles {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-        
-        .particle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: #00D4FF;
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: particleFloat 15s linear infinite;
-        }
-        
-        @keyframes particleFloat {
-            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
-        }
-        
-        /* Header */
-        .header {
-            background: rgba(10,10,10,0.95);
-            backdrop-filter: blur(20px);
-            padding: 20px 0;
-            position: fixed;
-            width: 100%; top: 0; z-index: 1000;
-            border-bottom: 1px solid rgba(0,212,255,0.2);
-            transition: all 0.3s;
-        }
-        
-        .header.scrolled {
-            padding: 15px 0;
-            box-shadow: 0 10px 30px rgba(0,212,255,0.1);
-        }
-        
-        .nav {
-            max-width: 1200px; margin: 0 auto; padding: 0 20px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        
-        .logo {
-            font-size: 38px; font-weight: 900;
-            background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-decoration: none; letter-spacing: 1px;
-            font-family: 'Inter', sans-serif;
-            position: relative;
-            filter: drop-shadow(0 0 20px rgba(0,212,255,0.4));
-            transition: all 0.3s;
-        }
-        
-        .logo:hover {
-            transform: scale(1.05);
-            filter: drop-shadow(0 0 30px rgba(0,212,255,0.6));
-        }
-        
-        .cta-btn {
-            background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
-            color: white; padding: 12px 24px; border-radius: 25px;
-            text-decoration: none; font-weight: 600;
-            transition: all 0.3s; position: relative; overflow: hidden;
-        }
-        
-        .cta-btn::before {
-            content: ''; position: absolute; top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.7s;
-        }
-        
-        .cta-btn:hover::before { left: 100%; }
-        .cta-btn:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 20px 40px rgba(0,212,255,0.4); }
-        
-        /* Hero */
-        .hero {
-            padding: 140px 20px 80px; text-align: center;
-            background: radial-gradient(ellipse at center, rgba(0,212,255,0.08) 0%, transparent 70%);
-            position: relative; min-height: 100vh; display: flex; align-items: center;
-        }
-        
-        .hero::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(0,212,255,0.05) 60deg, transparent 120deg);
-            animation: heroRotate 30s linear infinite;
-        }
-        
-        @keyframes heroRotate { 
-            0% { transform: rotate(0deg); } 
-            100% { transform: rotate(360deg); } 
-        }
-        
-        .hero-content { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; }
-        
-        .hero h1 {
-            font-size: 72px; font-weight: 900; margin-bottom: 10px;
-            background: linear-gradient(135deg, #ffffff 0%, #00D4FF 50%, #0099CC 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 30px rgba(0,212,255,0.3));
-            animation: fadeInUp 1s ease-out;
-        }
-        
-        .hero .web-3 {
-            font-size: 84px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            display: block;
-            margin-top: 10px;
-            animation: glowPulse 2s ease-in-out infinite;
-        }
-        
-        @keyframes glowPulse {
-            0%, 100% { filter: drop-shadow(0 0 20px rgba(0,212,255,0.3)); }
-            50% { filter: drop-shadow(0 0 40px rgba(0,212,255,0.6)); }
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .hero p { 
-            font-size: 20px; color: #ccc; margin-bottom: 40px; 
-            max-width: 600px; margin-left: auto; margin-right: auto; 
-            animation: fadeInUp 1s ease-out 0.2s both;
-        }
-        
-        .hero-buttons { 
-            display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; 
-            animation: fadeInUp 1s ease-out 0.4s both;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
-            color: white; padding: 18px 36px; border-radius: 30px;
-            text-decoration: none; font-weight: 600; font-size: 18px;
-            transition: all 0.4s; position: relative; overflow: hidden;
-        }
-        
-        .btn-primary::before {
-            content: ''; position: absolute; top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.7s;
-        }
-        
-        .btn-primary:hover::before { left: 100%; }
-        .btn-primary:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 25px 60px rgba(0,212,255,0.5); }
-        
-        .btn-secondary {
-            background: rgba(0,212,255,0.1); color: #00D4FF;
-            padding: 18px 36px; border: 2px solid #00D4FF; border-radius: 30px;
-            text-decoration: none; font-weight: 600; font-size: 18px;
-            transition: all 0.4s; backdrop-filter: blur(10px);
-        }
-        
-        .btn-secondary:hover { background: #00D4FF; color: #fff; transform: translateY(-4px) scale(1.05); }
-        
-        /* Services */
-        .services { padding: 100px 20px; background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); position: relative; }
-        
-        .container { max-width: 1200px; margin: 0 auto; }
-        
-        .section-title { text-align: center; margin-bottom: 60px; }
-        .section-title h2 { 
-            font-size: 48px; font-weight: 800; margin-bottom: 20px; 
-            animation: fadeInUp 1s ease-out;
-        }
-        .section-title p { font-size: 18px; color: #ccc; }
-        
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        
-        .service-card {
-            background: linear-gradient(145deg, rgba(45,45,45,0.8) 0%, rgba(26,26,26,0.9) 100%);
-            backdrop-filter: blur(20px); padding: 40px 30px; border-radius: 20px;
-            text-align: center; border: 1px solid rgba(0,212,255,0.15);
-            transition: all 0.5s; position: relative; overflow: hidden;
-            animation: fadeInUp 1s ease-out both;
-        }
-        
-        .service-card:nth-child(1) { animation-delay: 0.1s; }
-        .service-card:nth-child(2) { animation-delay: 0.2s; }
-        .service-card:nth-child(3) { animation-delay: 0.3s; }
-        .service-card:nth-child(4) { animation-delay: 0.4s; }
-        
-        .service-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, rgba(0,212,255,0.05) 0%, rgba(0,153,204,0.03) 100%);
-            opacity: 0; transition: opacity 0.5s; z-index: -1;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-10px) scale(1.02); border-color: rgba(0,212,255,0.5);
-            box-shadow: 0 30px 60px rgba(0,212,255,0.2);
-        }
-        
-        .service-card:hover::before { opacity: 1; }
-        
-        .service-icon { 
-            font-size: 48px; margin-bottom: 20px; 
-            transition: all 0.5s;
-            display: inline-block;
-        }
-        
-        .service-card:hover .service-icon {
-            transform: scale(1.2) rotate(5deg);
-        }
-        
-        .service-card h3 { font-size: 24px; font-weight: 700; margin-bottom: 15px; }
-        .service-card p { color: #ccc; font-size: 16px; }
-        
-        /* Why Choose Us */
-        .why-us { padding: 100px 20px; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); position: relative; }
-        
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 60px; }
-        
-        .feature-card {
-            background: linear-gradient(145deg, rgba(45,45,45,0.6) 0%, rgba(26,26,26,0.8) 100%);
-            backdrop-filter: blur(20px);
-            padding: 40px 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(0,212,255,0.1);
-            transition: all 0.5s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(0,212,255,0.1), transparent);
-            opacity: 0;
-            transition: all 0.8s;
-        }
-        
-        .feature-card:hover::before {
-            opacity: 1;
-            animation: rotate 3s linear infinite;
-        }
-        
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(0,212,255,0.3);
-            box-shadow: 0 20px 50px rgba(0,212,255,0.15);
-        }
-        
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            margin-bottom: 20px;
-            transition: all 0.5s;
-        }
-        
-        .feature-card:hover .feature-icon {
-            transform: scale(1.1) rotate(-5deg);
-            box-shadow: 0 10px 30px rgba(0,212,255,0.4);
-        }
-        
-        .feature-card h3 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .feature-card p {
-            color: #ccc;
-            font-size: 16px;
-            line-height: 1.6;
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* AI Tools */
-        .ai-tools { padding: 100px 20px; background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); }
-        
-        .tools-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 25px; 
-            margin-top: 40px; 
-            max-width: 800px; 
-            margin-left: auto; 
-            margin-right: auto;
-            justify-items: center;
-        }
-        
-        .tool-card {
-            background: rgba(26,26,26,0.8); backdrop-filter: blur(20px);
-            padding: 30px 20px; border-radius: 15px; text-align: center;
-            border: 1px solid rgba(0,212,255,0.1); transition: all 0.4s;
-            min-height: 140px; display: flex; flex-direction: column; justify-content: center;
-            width: 100%;
-            animation: fadeInUp 1s ease-out both;
-        }
-        
-        .tool-card:nth-child(1) { animation-delay: 0.1s; }
-        .tool-card:nth-child(2) { animation-delay: 0.15s; }
-        .tool-card:nth-child(3) { animation-delay: 0.2s; }
-        .tool-card:nth-child(4) { animation-delay: 0.25s; }
-        .tool-card:nth-child(5) { animation-delay: 0.3s; }
-        .tool-card:nth-child(6) { animation-delay: 0.35s; }
-        .tool-card:nth-child(7) { animation-delay: 0.4s; }
-        .tool-card:nth-child(8) { animation-delay: 0.45s; }
-        .tool-card:nth-child(9) { animation-delay: 0.5s; }
-        
-        .tool-card:hover {
-            transform: translateY(-5px) scale(1.03); border-color: #00D4FF;
-            box-shadow: 0 15px 40px rgba(0,212,255,0.2);
-        }
-        
-        .tool-card-last {
-            grid-column: 1 / -1;
-            max-width: 380px;
-            justify-self: center;
-        }
-        
-        .tool-icon {
-            font-size: 32px;
-            margin-bottom: 12px;
-            filter: drop-shadow(0 0 10px rgba(0,212,255,0.3));
-            transition: all 0.3s;
-            display: inline-block;
-        }
-        
-        .tool-card:hover .tool-icon {
-            transform: scale(1.15) rotateY(15deg);
-            filter: drop-shadow(0 0 20px rgba(0,212,255,0.6));
-        }
-        
-        .tool-card h4 { color: #fff; font-weight: 600; margin-bottom: 8px; }
-        .tool-card p { color: #ccc; font-size: 14px; }
-        
-        /* CTA */
-        .cta-section {
-            padding: 100px 20px; text-align: center;
-            background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: 
-                radial-gradient(circle at 30% 70%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                radial-gradient(circle at 70% 30%, rgba(255,255,255,0.1) 0%, transparent 50%);
-            animation: ctaFloat 12s ease-in-out infinite;
-        }
-        
-        @keyframes ctaFloat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        .cta-section h2 { color: #fff; font-size: 48px; font-weight: 800; margin-bottom: 20px; position: relative; z-index: 2; }
-        .cta-section p { color: #fff; font-size: 20px; margin-bottom: 40px; opacity: 0.9; position: relative; z-index: 2; }
-        
-        .cta-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 2; }
-        
-        .btn-white {
-            background: #fff; color: #00D4FF; padding: 18px 36px; border-radius: 30px;
-            text-decoration: none; font-weight: 600; font-size: 18px;
-            transition: all 0.4s; position: relative; overflow: hidden;
-        }
-        
-        .btn-white::before {
-            content: ''; position: absolute; top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0,212,255,0.2), transparent);
-            transition: left 0.6s;
-        }
-        
-        .btn-white:hover::before { left: 100%; }
-        .btn-white:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 20px 50px rgba(255,255,255,0.3); }
-        
-        /* Footer */
-        .footer {
-            background: #0a0a0a; padding: 60px 20px 30px;
-            border-top: 1px solid rgba(0,212,255,0.2);
-        }
-        
-        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
-        .footer-section h4 { 
-            font-size: 20px; font-weight: 600; margin-bottom: 20px; 
-            background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .footer-section p { color: #ccc; line-height: 1.6; }
-        .footer-section a { 
-            color: #ccc; text-decoration: none; margin-bottom: 10px; 
-            display: block; transition: all 0.3s; 
-        }
-        .footer-section a:hover { 
-            color: #00D4FF; 
-            transform: translateX(5px);
-        }
-        
-        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); color: #ccc; }
-        
-        /* Scroll to Top Button */
-        .scroll-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-            z-index: 999;
-        }
-        
-        .scroll-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .scroll-top:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,212,255,0.4);
-        }
-        
-        .scroll-top::after {
-            content: '↑';
-            font-size: 24px;
-            color: white;
-        }
-        
-        /* Mobile */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 42px; }
-            .hero .web-3 { font-size: 56px; }
-            .nav { padding: 0 15px; }
-            .hero-buttons { flex-direction: column; align-items: center; }
-            .services-grid { grid-template-columns: 1fr; }
-            .features-grid { grid-template-columns: 1fr; }
-            .tools-grid { grid-template-columns: 1fr; max-width: 400px; }
-            .logo { font-size: 32px; }
-            .section-title h2 { font-size: 36px; }
-            .cta-section h2 { font-size: 36px; }
-        }
-        
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 32px; }
-            .hero .web-3 { font-size: 42px; }
-            .hero p { font-size: 16px; }
-            .btn-primary, .btn-secondary, .btn-white { padding: 14px 28px; font-size: 16px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEEK Web 3.0 - Разработка сайтов, чат-ботов и подписки на ИИ</title>
+<meta name="description" content="GEEK Web 3.0 - создание сайтов, чат-ботов для Telegram, мини-приложений и подписки на ИИ-инструменты">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Roboto:wght@400;500;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Roboto',sans-serif;background:#0a0a0a;color:#fff;overflow-x:hidden}
+.bg-animated{position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 20% 80%,rgba(0,212,255,0.15) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(0,153,204,0.1) 0%,transparent 50%);animation:bgMove 20s ease-in-out infinite;z-index:-1}
+@keyframes bgMove{0%,100%{transform:rotate(0deg)}50%{transform:rotate(180deg)}}
+.particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.particle{position:absolute;width:3px;height:3px;background:#00D4FF;border-radius:50%;opacity:0.3;animation:particleFloat 15s linear infinite}
+@keyframes particleFloat{0%{transform:translateY(100vh) translateX(0);opacity:0}10%{opacity:0.3}90%{opacity:0.3}100%{transform:translateY(-100vh) translateX(100px);opacity:0}}
+.header{background:rgba(10,10,10,0.95);backdrop-filter:blur(20px);padding:20px 0;position:fixed;width:100%;top:0;z-index:1000;border-bottom:1px solid rgba(0,212,255,0.2);transition:all 0.3s}
+.header.scrolled{padding:15px 0;box-shadow:0 10px 30px rgba(0,212,255,0.1)}
+.nav{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:38px;font-weight:900;background:linear-gradient(135deg,#00D4FF 0%,#0099CC 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;letter-spacing:1px;font-family:'Inter',sans-serif;filter:drop-shadow(0 0 20px rgba(0,212,255,0.4));transition:all 0.3s}
+.logo:hover{transform:scale(1.05);filter:drop-shadow(0 0 30px rgba(0,212,255,0.6))}
+.cta-btn{background:linear-gradient(135deg,#00D4FF 0%,#0099CC 100%);color:white;padding:12px 24px;border-radius:25px;text-decoration:none;font-weight:600;transition:all 0.3s;position:relative;overflow:hidden}
+.cta-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);transition:left 0.7s}
+.cta-btn:hover::before{left:100%}
+.cta-btn:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 20px 40px rgba(0,212,255,0.4)}
+.hero{padding:140px 20px 80px;text-align:center;background:radial-gradient(ellipse at center,rgba(0,212,255,0.08) 0%,transparent 70%);position:relative;min-height:100vh;display:flex;align-items:center}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:conic-gradient(from 0deg at 50% 50%,transparent 0deg,rgba(0,212,255,0.05) 60deg,transparent 120deg);animation:heroRotate 30s linear infinite}
+@keyframes heroRotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto}
+.hero h1{font-size:72px;font-weight:900;margin-bottom:20px;background:linear-gradient(135deg,#ffffff 0%,#00D4FF 50%,#0099CC 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 30px rgba(0,212,255,0.3));animation:fadeInUp 1s ease-out}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.hero p{font-size:20px;color:#ccc;margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto;animation:fadeInUp 1s ease-out 0.2s both}
+.hero-buttons{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;animation:fadeInUp 1s ease-out 0.4s both}
+.btn-primary{background:linear-gradient(135deg,#00D4FF 0%,#0099CC 100%);color:white;padding:18px 36px;border-radius:30px;text-decoration:none;font-weight:600;font-size:18px;transition:all 0.4s;position:relative;overflow:hidden}
+.btn-primary::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);transition:left 0.7s}
+.btn-primary:hover::before{left:100%}
+.btn-primary:hover{transform:translateY(-4px) scale(1.05);box-shadow:0 25px 60px rgba(0,212,255,0.5)}
+.btn-secondary{background:rgba(0,212,255,0.1);color:#00D4FF;padding:18px 36px;border:2px solid #00D4FF;border-radius:30px;text-decoration:none;font-weight:600;font-size:18px;transition:all 0.4s;backdrop-filter:blur(10px)}
+.btn-secondary:hover{background:#00D4FF;color:#fff;transform:translateY(-4px) scale(1.05)}
+.services{padding:100px 20px;background:linear-gradient(135deg,#1a1a1a 0%,#0a0a0a 100%)}
+.container{max-width:1200px;margin:0 auto}
+.section-title{text-align:center;margin-bottom:60px}
+.section-title h2{font-size:48px;font-weight:800;margin-bottom:20px;animation:fadeInUp 1s ease-out}
+.section-title p{font-size:18px;color:#ccc}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px}
+.service-card{background:linear-gradient(145deg,rgba(45,45,45,0.8) 0%,rgba(26,26,26,0.9) 100%);backdrop-filter:blur(20px);padding:40px 30px;border-radius:20px;text-align:center;border:1px solid rgba(0,212,255,0.15);transition:all 0.5s;position:relative;overflow:hidden;animation:fadeInUp 1s ease-out both}
+.service-card:nth-child(1){animation-delay:0.1s}
+.service-card:nth-child(2){animation-delay:0.2s}
+.service-card:nth-child(3){animation-delay:0.3s}
+.service-card:nth-child(4){animation-delay:0.4s}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(0,212,255,0.05) 0%,rgba(0,153,204,0.03) 100%);opacity:0;transition:opacity 0.5s;z-index:-1}
+.service-card:hover{transform:translateY(-10px) scale(1.02);border-color:rgba(0,212,255,0.5);box-shadow:0 30px 60px rgba(0,212,255,0.2)}
+.service-card:hover::before{opacity:1}
+.service-icon{font-size:48px;margin-bottom:20px;transition:all 0.5s;display:inline-block}
+.service-card:hover .service-icon{transform:scale(1.2) rotate(5deg)}
+.service-card h3{font-size:24px;font-weight:700;margin-bottom:15px}
+.service-card p{color:#ccc;font-size:16px}
+.why-us{padding:100px 20px;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 100%)}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin-top:60px}
+.feature-card{background:linear-gradient(145deg,rgba(45,45,45,0.6) 0%,rgba(26,26,26,0.8) 100%);backdrop-filter:blur(20px);padding:40px 30px;border-radius:20px;border:1px solid rgba(0,212,255,0.1);transition:all 0.5s;position:relative;overflow:hidden}
+.feature-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent,rgba(0,212,255,0.1),transparent);opacity:0;transition:all 0.8s}
+.feature-card:hover::before{opacity:1;animation:rotate 3s linear infinite}
+@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.feature-card:hover{transform:translateY(-10px);border-color:rgba(0,212,255,0.3);box-shadow:0 20px 50px rgba(0,212,255,0.15)}
+.feature-icon{width:70px;height:70px;background:linear-gradient(135deg,#00D4FF 0%,#0099CC 100%);border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:20px;transition:all 0.5s}
+.feature-card:hover .feature-icon{transform:scale(1.1) rotate(-5deg);box-shadow:0 10px 30px rgba(0,212,255,0.4)}
+.feature-card h3{font-size:24px;font-weight:700;margin-bottom:15px;position:relative;z-index:2}
+.feature-card p{color:#ccc;font-size:16px;line-height:1.6;position:relative;z-index:2}
+.ai-tools{padding:100px 20px;background:linear-gradient(135deg,#1a1a1a 0%,#0a0a0a 100%)}
+.tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:25px;margin-top:40px;max-width:800px;margin-left:auto;margin-right:auto}
+.tool-card{background:rgba(26,26,26,0.8);backdrop-filter:blur(20px);padding:30px 20px;border-radius:15px;text-align:center;border:1px solid rgba(0,212,255,0.1);transition:all 0.4s;min-height:140px;animation:fadeInUp 1s ease-out both}
+.tool-card:nth-child(1){animation-delay:0.1s}
+.tool-card:nth-child(2){animation-delay:0.15s}
+.tool-card:nth-child(3){animation-delay:0.2s}
+.tool-card:nth-child(4){animation-delay:0.25s}
+.tool-card:nth-child(5){animation-delay:0.3s}
+.tool-card:nth-child(6){animation-delay:0.35s}
+.tool-card:nth-child(7){animation-delay:0.4s}
+.tool-card:nth-child(8){animation-delay:0.45s}
+.tool-card:nth-child(9){animation-delay:0.5s}
+.tool-card:hover{transform:translateY(-5px) scale(1.03);border-color:#00D4FF;box-shadow:0 15px 40px rgba(0,212,255,0.2)}
+.tool-card-last{grid-column:1/-1;max-width:380px;justify-self:center}
+.tool-icon{font-size:32px;margin-bottom:12px;filter:drop-shadow(0 0 10px rgba(0,212,255,0.3));transition:all 0.3s;display:inline-block}
+.tool-card:hover .tool-icon{transform:scale(1.15) rotateY(15deg);filter:drop-shadow(0 0 20px rgba(0,212,255,0.6))}
+.tool-card h4{color:#fff;font-weight:600;margin-bottom:8px}
+.tool-card p{color:#ccc;font-size:14px}
+.cta-section{padding:100px 20px;text-align:center;background:linear-gradient(135deg,#00D4FF 0%,#0099CC 100%);position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 30% 70%,rgba(255,255,255,0.1) 0%,transparent 50%),radial-gradient(circle at 70% 30%,rgba(255,255,255,0.1) 0%,transparent 50%);animation:ctaFloat 12s ease-in-out infinite}
+@keyframes ctaFloat{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.cta-section h2{color:#fff;font-size:48px;font-weight:800;margin-bottom:20px;position:relative;z-index:2}
+.cta-section p{color:#fff;font-size:20px;margin-bottom:40px;opacity:0.9;position:relative;z-index:2}
+.cta-buttons{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2}
+.btn-white{background:#fff;color:#00D4FF;padding:18px 36px;border-radius:30px;text-decoration:none;font-weight:600;font-size:18px;transition:all 0.4s;position:relative;overflow:hidden}
+.btn-white::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(0,212,255,0.2),transparent);transition:left 0.6s}
+.btn-white:hover::before{left:100%}
+.btn-white:hover{transform:translateY(-4px) scale(1.05);box-shadow:0 20px 50px rgba(255,255,255,0.3)}
+.footer{background:#0a0a0a;padding:60px 20px 30px;border-top:1px solid rgba(0,212,255,0.2)}
+.footer-content{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:40px}
+.footer-section h4{font-size:32px;font-weight:900;margin-bottom:20px;background:linear-gradient(135deg,#00D4FF 0%,#0099CC 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.footer-section p{color:#ccc;line-height:1.6}
+.footer-section a{color:#ccc;text-decoration:none;margin-bottom:10px;display:block;transition:all 0.3s}
+.footer-section a:hover{color:#00D4FF;transform:translateX(5px)}
+.footer-bottom{text-align:center;padding-top:30px;border-top:1px solid rgba(255,255,255,0.1);color:#ccc}
+.scroll-top{position:fixed;bottom:30px;right:30px;width:50px;height:50px;background:linear-gradient(135deg,#00D4FF 0%,#0099CC 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;visibility:hidden;transition:all 0.3s;z-index:999}
+.scroll-top.visible{opacity:1;visibility:visible}
+.scroll-top:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,212,255,0.4)}
+.scroll-top::after{content:'↑';font-size:24px;color:white}
+@media (max-width:768px){.hero h1{font-size:48px}.services-grid,.features-grid{grid-template-columns:1fr}.tools-grid{grid-template-columns:1fr;max-width:400px}.logo{font-size:32px}.section-title h2{font-size:36px}.cta-section h2{font-size:36px}.footer-section h4{font-size:24px}}
+</style>
 </head>
 <body>
-    <!-- Particles -->
-    <div class="particles">
-        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
-        <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
-        <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
-        <div class="particle" style="left: 40%; animation-delay: 1s;"></div>
-        <div class="particle" style="left: 50%; animation-delay: 3s;"></div>
-        <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
-        <div class="particle" style="left: 70%; animation-delay: 2.5s;"></div>
-        <div class="particle" style="left: 80%; animation-delay: 4.5s;"></div>
-        <div class="particle" style="left: 90%; animation-delay: 1.5s;"></div>
-    </div>
-    
-    <div class="bg-animated"></div>
-    
-    <header class="header" id="header">
-        <nav class="nav">
-            <a href="#" class="logo">GEEK</a>
-            <a href="https://t.me/lazyGEEEK" class="cta-btn">Связаться</a>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>GEEK <span class="web-3">WEB 3.0</span></h1>
-            <p>Готовые решения для вашего бизнеса. Мы не только рассказываем о технологиях, но и предлагаем инновационные решения.</p>
-            <div class="hero-buttons">
-                <a href="https://t.me/geekweb3" class="btn-primary">Telegram канал</a>
-                <a href="https://t.me/lazyGEEEK" class="btn-secondary">Консультация</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="services" id="services">
-        <div class="container">
-            <div class="section-title">
-                <h2>Наши услуги</h2>
-                <p>Полный спектр цифровых решений</p>
-            </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">🤖</div>
-                    <h3>Чат-боты Telegram</h3>
-                    <p>Автоматизация общения с клиентами 24/7</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">📱</div>
-                    <h3>Мини-приложения</h3>
-                    <p>Интерактивные сервисы в мессенджере</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🌐</div>
-                    <h3>Сайты и лендинги</h3>
-                    <p>Современный дизайн, высокая конверсия</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">💳</div>
-                    <h3>ИИ-подписки</h3>
-                    <p>Доступ к популярным ИИ-инструментам</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="why-us">
-        <div class="container">
-            <div class="section-title">
-                <h2>Почему выбирают нас</h2>
-                <p>Мы создаем решения, которые работают на ваш успех</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Скорость</h3>
-                    <p>Быстрая разработка и внедрение проектов. Начинаем работать с первого дня, без лишних согласований.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Адаптивность</h3>
-                    <p>Гибкий подход к каждому проекту. Адаптируемся под ваши требования и меняющиеся условия рынка.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3>Без шаблонов</h3>
-                    <p>Создаем уникальные решения под ключ. Каждый проект — это индивидуальная разработка, а не шаблонное решение.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="ai-tools" id="tools">
-        <div class="container">
-            <div class="section-title">
-                <h2>ИИ-инструменты</h2>
-                <p>Подписки на лучшие сервисы</p>
-            </div>
-            <div class="tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">🤖</div>
-                    <h4>ChatGPT</h4>
+<div class="particles">
+<div class="particle" style="left:10%;animation-delay:0s"></div>
+<div class="particle" style="left:20%;animation-delay:2s"></div>
+<div class="particle" style="left:30%;animation-delay:4s"></div>
+<div class="particle" style="left:40%;animation-delay:1s"></div>
+<div class="particle" style="left:50%;animation-delay:3s"></div>
+<div class="particle" style="left:60%;animation-delay:5s"></div>
+<div class="particle" style="left:70%;animation-delay:2.5s"></div>
+<div class="particle" style="left:80%;animation-delay:4.5s"></div>
+<div class="particle" style="left:90%;animation-delay:1.5s"></div>
+</div>
+<div class="bg-animated"></div>
+<header class="header" id="header">
+<nav class="nav">
+<a href="#" class="logo">GEEK</a>
+<a href="https://t.me/lazyGEEEK" class="cta-btn">Связаться</a>
+</nav>
+</header>
+<section class="hero">
+<div class="hero-content">
+<h1>GEEK WEB 3.0</h1>
+<p>Готовые решения для вашего бизнеса. Мы не только рассказываем о технологиях, но и предлагаем инновационные решения.</p>
+<div class="hero-buttons">
+<a href="https://t.me/geekweb3" class="btn-primary">Telegram канал</a>
+<a href="https://t.me/lazyGEEEK" class="btn-secondary">Консультация</a>
+</div>
+</div>
+</section>
+<section class="services">
+<div class="container">
+<div class="section-title">
+<h2>Наши услуги</h2>
+<p>Полный спектр цифровых решений</p>
+</div>
+<div class="services-grid">
+<div class="service-card">
+<div class="service-icon">🤖</div>
+<h3>Чат-боты Telegram</h3>
+<p>Автоматизация общения с клиентами 24/7</p>
+</div>
+<div class="service-card">
+<div class="service-icon">📱</div>
+<h3>Мини-приложения</h3>
+<p>Интерактивные сервисы в мессенджере</p>
+</div>
+<div class="service-card">
+<div class="service-icon">🌐</div>
+<h3>Сайты и лендинги</h3>
+<p>Современный дизайн, высокая конверсия</p>
+</div>
+<div class="service-card">
+<div class="service-icon">💳</div>
+<h3>ИИ-подписки</h3>
+<p>Доступ к популярным ИИ-инструментам</p>
+</div>
+</div>
+</div>
+</section>
+<section class="why-us">
+<div class="container">
+<div class="section-title">
+<h2>Почему выбирают нас</h2>
+<p>Мы создаем решения, которые работают на ваш успех</p>
+</div>
+<div class="features-grid">
+<div class="feature-card">
+<div class="feature-icon">⚡</div>
+<h3>Скорость</h3>
+<p>Быстрая разработка и внедрение проектов. Начинаем работать с первого дня.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🎯</div>
+<h3>Адаптивность</h3>
+<p>Гибкий подход к каждому проекту. Адаптируемся под ваши требования.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🎨</div>
+<h3>Без шаблонов</h3>
+<p>Создаем уникальные решения под ключ. Индивидуальная разработка.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="ai-tools">
+<div class="container">
+<div class="section-title">
+<h2>ИИ-инструменты</h2>
+<p>Подписки на лучшие сервисы</p>
+</div>
+<div class="tools-grid">
+<div class="tool-card"><div class="tool-icon">🤖</div><h4>ChatGPT</h4><p>Умный помощник</p></div>
+<div class="tool-card"><div class="tool-icon">🧠</div><h4>Claude</h4><p>ИИ для анализа</p></div>
+<div class="tool-card"><div class="tool-icon">⚡</div><h4>Cursor</h4><p>ИИ-редактор</p></div>
+<div class="tool-card"><div class="tool-icon">🎨</div><h4>Krea</h4><p>Генерация изображений</p></div>
+<div class="tool-card"><div class="tool-icon">🎵</div><h4>Suno</h4><p>Создание музыки</p></div>
+<div class="tool-card"><div class="tool-icon">🎬</div><h4>Hailuo</h4><p>Создание видео</p></div>
+<div class="tool-card"><div class="tool-icon">🎞️</div><h4>Kling AI</h4><p>Продвинутые видео</p></div>
+<div class="tool-card"><div class="tool-icon">📹</div><h4>VEO 3</h4><p>Google видео ИИ</p></div>
+<div class="tool-card tool-card-last"><div class="tool-icon">🔮</div><h4>И другие!</h4><p>Уточняйте в ЛС</p></div>
+</div>
+</div>
+</section>
+<section class="cta-section">
+<div class="container">
+<h2>Готовы начать проект?</h2>
+<p>Свяжитесь с нами для консультации</p>
+<div class="cta-buttons">
+<a href="https://t.me/lazyGEEEK" class="btn-white">Написать в Telegram</a>
+<a href="https://www.avito.ru/user/ec4c036d1faa0a154a202ce6fc4e3678/profile?src=sharing" class="btn-white">Авито</a>
+</div>
+</div>
+</section>
+<footer class="footer">
+<div class="container">
+<div class="footer-content">
+<div class="footer-section">
+<h4>GEEK WEB 3.0</h4>
+<p>Инновационные решения для цифрового бизнеса. Создаем сайты, чат-ботов и предоставляем доступ к лучшим ИИ-инструментам.</p>
+</div>
+<div class="footer-section">
+<h4>Контакты</h4>
+<a href="https://t.me/geekweb3">Telegram канал</a>
+<a href="https://t.me/lazyGEEEK">Связаться с нами</a>
+<a href="https://www.avito.ru/user/ec4c036d1faa0a154a202ce6fc4e3678/profile?src=sharing">Авито</a>
+</div>
+</div>
+<div class="footer-bottom">
+<p>&copy; 2025 GEEK Web 3.0. Все права защищены.</p>
+</div>
+</div>
+</footer>
+<div class="scroll-top" id="scrollTop"></div>
+<script>
+const h=document.getElementById('header'),s=document.getElementById('scrollTop');
+window.addEventListener('scroll',()=>{window.scrollY>100?(h.classList.add('scrolled'),s.classList.add('visible')):(h.classList.remove('scrolled'),s.classList.remove('visible'))});
+s.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+const o=new IntersectionObserver(e=>{e.forEach(t=>{t.isIntersecting&&(t.target.style.opacity='1',t.target.style.transform='translateY(0)')})},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.service-card,.feature-card,.tool-card').forEach(c=>o.observe(c));
+</script>
+</body>
+</html>
